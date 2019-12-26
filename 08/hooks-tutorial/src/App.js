@@ -1,8 +1,16 @@
-import React, {useState} from 'react';
+import React from 'react';
 import './App.css';
 import Info from "./Info";
 
 const App = () => {
+  return <Info/>;
+};
+
+/*const App = () => {
+  return <Average/>;
+};*/
+
+/*const App = () => {
   const [visible, setVisible] = useState(false);
   return (
     <div>
@@ -17,6 +25,6 @@ const App = () => {
       {visible && <Info/>}
     </div>
   );
-};
+};*/
 
 export default App;
