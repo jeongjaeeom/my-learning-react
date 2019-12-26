@@ -1,14 +1,17 @@
 import React from 'react';
 import './App.css';
 import Info from "./Info";
+import Average from "./Average";
 
+/*
 const App = () => {
   return <Info/>;
 };
+*/
 
-/*const App = () => {
+const App = () => {
   return <Average/>;
-};*/
+};
 
 /*const App = () => {
   const [visible, setVisible] = useState(false);
