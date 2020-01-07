@@ -1,7 +1,14 @@
-import React, {useCallback, useState} from 'react';
-import NewsList from "./components/NewsList";
-import Categories from "./components/Catogories";
+import React from 'react';
+import {Route} from 'react-router-dom';
+import NewsPage from "./pages/NewsPage";
 
+// category 값 리액트 라우터 URL 파라미터 이용.
+const App = () => {
+  return <Route path="/:category?" component={NewsPage}/>;
+};
+
+/*
+// category 값 useState 관리.
 const App = () => {
   const [category, setCategory] = useState('all');
   const onSelect = useCallback(category => setCategory(category), []);
@@ -13,5 +20,6 @@ const App = () => {
     </>
   )
 };
+*/
 
 export default App;
