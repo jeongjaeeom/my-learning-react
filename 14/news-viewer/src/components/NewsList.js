@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import styled from "styled-components";
 import NewsItem from "./NewsItem";
 import axios from "axios";
+import usePromise from "../lib/usePromise";
 
 const NewsListBlock = styled.div`
   box-sizing: border-box;
@@ -24,10 +25,10 @@ const sampleArticle = {
 };
 
 const NewsList = ({category}) => {
-  const [articles, setArticles] = useState(null);
-  const [loading, setLoading] = useState(false);
+  /*const [articles, setArticles] = useState(null);
+  const [loading, setLoading] = useState(false);*/
 
-  useEffect(() => {
+  /*useEffect(() => {
     // async를 사용하는 함수 따로 선언
     const fetchData = async () => {
       setLoading(true);
@@ -42,6 +43,13 @@ const NewsList = ({category}) => {
       setLoading(false);
     };
     fetchData();
+  }, [category]);*/
+
+  const [loading, response, error] = usePromise(() => {
+    const query = category === 'all' ? '' : `&category=${category}`;
+    return axios.get(
+      `https://newsapi.org/v2/top-headlines?country=kr${query}&apiKey=c428faafaa27401882bca20346cffb2d`
+    );
   }, [category]);
 
   // 대기 중일 때
@@ -50,11 +58,12 @@ const NewsList = ({category}) => {
   }
 
   // 아직 articles 값이 설정되지 않았을 때
-  if (!articles) {
+  if (!response) {
     return null;
   }
 
-  // articles 값이 유효할 때
+  // response 값이 유효할 때
+  const {articles} = response.data;
   return (
     <NewsListBlock>
       {articles.map(article => (
