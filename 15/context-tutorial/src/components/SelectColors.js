@@ -1,37 +1,45 @@
-import React from "react";
-import {ColorConsumer} from "../contexts/color";
+import React, {Component} from "react";
+import ColorContext from "../contexts/color";
 
 const colors = ['red', 'orange', 'yellow', 'green', 'blue', 'indigo'];
 
-const SelectColors = () => {
-  return (
+class SelectColors extends Component {
+  static contextType = ColorContext;
+
+  handleSetColor = color => {
+    this.context.actions.setColor(color);
+  };
+
+  handleSetSubColor = subColor => {
+    this.context.actions.setSubColor(subColor);
+  };
+
+  render() {
+    return (
       <div>
         <h2>색상을 선택하세요.</h2>
-        <ColorConsumer>
-          {({actions}) => (
-              <div style={{display: 'flex'}}>
-                {colors.map(color => (
-                    <div
-                        key={color}
-                        style={{
-                          background: color,
-                          width: '24px',
-                          height: '24px',
-                          cursor: 'pointer'
-                        }}
-                        onClick={() => actions.setColor(color)}
-                        onContextMenu={e => {
-                          e.preventDefault(); // 마우스 오른쪾 버튼 클릭 시 메뉴가 뜨는 것을 무시함
-                          actions.setSubColor(color);
-                        }}
-                    />
-                ))}
-              </div>
-          )}
-        </ColorConsumer>
+        <div style={{display: 'flex'}}>
+          {colors.map(color => (
+              <div
+                  key={color}
+                  style={{
+                    background: color,
+                    width: '24px',
+                    height: '24px',
+                    cursor: 'pointer'
+                  }}
+                  onClick={() => this.handleSetColor(color)}
+                  onContextMenu={e => {
+                    e.preventDefault();
+                    this.handleSetSubColor(color)
+                  }}
+              />
+          ))}
+        </div>
         <hr/>
       </div>
-  );
-};
+    );
+  }
+}
 
 export default SelectColors;
