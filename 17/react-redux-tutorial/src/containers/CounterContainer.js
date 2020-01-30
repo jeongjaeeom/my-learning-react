@@ -1,15 +1,26 @@
-import React from "react";
-import {connect} from "react-redux";
+import React, {useCallback} from "react";
+import {useDispatch, useSelector} from "react-redux";
 import Counter from "../components/Counter";
 import {decrease, increase} from "../modules/counter";
 
-const CounterContainer = ({number, increase, decrease}) => {
+const CounterContainer = () => {
+  const number = useSelector(state => state.counter.number);
+  const dispatch = useDispatch();
+  const onIncrease = useCallback(() => dispatch(increase()), [dispatch])
+  const onDecrease = useCallback(() => dispatch(decrease()), [dispatch])
   return (
-      <Counter number={number} onIncrease={increase} onDecrease={decrease}/>
+      <Counter
+          number={number}
+          onIncrease={onIncrease}
+          onDecrease={onDecrease}
+      />
   )
 };
 
+export default CounterContainer;
+
 // 내부에서 bindActionCreators 활용하게끔 객체형태로 입력 현재 가장 편한 방법.
+/*
 export default connect(
     state => ({
       number: state.counter.number
@@ -19,6 +30,7 @@ export default connect(
       decrease
     }
 )(CounterContainer);
+*/
 
 /*
 bindActionCreators 활용
